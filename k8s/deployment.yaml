@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: github-copilot-demo
+  name: github-copilot-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: github-copilot-demo
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: github-copilot-demo
+    spec:
+      containers:
+      - image: brainupgrade/github-copilot-demo
+        name: github-copilot-demo
+        imagePullPolicy: Always
+        resources: 
+          limits:
+            cpu: 500m
+            memory: 1024Mi
+          requests:
+            cpu: 100m
+            memory: 512Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: github-copilot-demo
+spec:
+  type: NodePort
+  selector:
+    app: github-copilot-demo
+  ports:
+  - port: 80
+    name: "http"
+    targetPort: 8080
+    nodePort: 32400
