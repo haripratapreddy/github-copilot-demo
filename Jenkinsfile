@@ -26,7 +26,7 @@ pipeline {
       archive 'target/**/*.jar'
     }
     success {
-      withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+      withCredentials([usernamePassword(credentialsId: 'docker_hub_credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
         sh "docker login -u ${USERNAME} -p ${PASSWORD}"
         sh "docker push harip220/github-copilot-demo:${env.BUILD_ID}"
         sh "docker push harip220/github-copilot-demo:latest"
